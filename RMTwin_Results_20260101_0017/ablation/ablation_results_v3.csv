@@ -1,0 +1,6 @@
+variant,validity_rate,feasible_rate,hv_6d
+Full Ontology,1.0,0.131,0.0
+No Type Inference,0.6745245337778938,0.131,0.0
+No Compatibility,1.0,0.131,0.0
+Property ±30%,0.8333333333333334,0.131,0.0
+Combined Degraded,1.0,0.131,0.0

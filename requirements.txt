@@ -1,0 +1,76 @@
+# Enhanced RMTwin Multi-Objective Optimization Framework Requirements
+# For Automation in Construction Publication
+# Python >= 3.8 required
+
+# Core Scientific Computing
+numpy>=1.21.0,<2.0.0
+pandas>=1.3.0,<2.0.0
+scipy>=1.7.0,<2.0.0
+scikit-learn>=1.0.0,<2.0.0
+
+# Multi-Objective Optimization
+pymoo>=0.6.0,<0.7.0
+
+# Semantic Web Technologies
+rdflib>=6.1.0,<7.0.0
+pyshacl>=0.20.0,<1.0.0
+
+# Visualization - Core
+matplotlib>=3.5.0,<4.0.0
+seaborn>=0.12.0,<1.0.0
+plotly>=5.10.0,<6.0.0
+
+# Additional Dependencies
+joblib>=1.1.0,<2.0.0          # For parallel processing optimization
+tqdm>=4.62.0,<5.0.0           # Progress bars for optimization
+tabulate>=0.9.0,<1.0.0        # For formatted table output
+
+# Optional but Recommended for Better Performance
+numba>=0.56.0,<1.0.0          # JIT compilation for numerical operations
+cython>=0.29.0,<1.0.0         # C-extensions for performance
+
+# Development and Testing (optional)
+pytest>=7.0.0,<8.0.0
+pytest-cov>=4.0.0,<5.0.0
+black>=22.0.0,<24.0.0         # Code formatting
+flake8>=5.0.0,<7.0.0          # Linting
+mypy>=0.990,<2.0.0            # Type checking
+
+# Documentation (optional)
+sphinx>=5.0.0,<7.0.0
+sphinx-rtd-theme>=1.0.0,<2.0.0
+nbsphinx>=0.8.0,<1.0.0
+
+# Jupyter Support (optional, for interactive analysis)
+jupyter>=1.0.0,<2.0.0
+notebook>=6.4.0,<7.0.0
+ipywidgets>=8.0.0,<9.0.0
+
+# Data File Handling
+openpyxl>=3.0.0,<4.0.0        # For Excel file support
+xlrd>=2.0.0,<3.0.0            # Legacy Excel support
+h5py>=3.6.0,<4.0.0            # HDF5 file support
+
+# System Requirements Notes:
+# - Minimum Python version: 3.8 (for dataclasses and typing features)
+# - Recommended Python version: 3.9 or 3.10
+# - Operating System: Cross-platform (Windows, macOS, Linux)
+# - RAM: Minimum 8GB, Recommended 16GB+ for large-scale optimization
+# - CPU: Multi-core processor recommended for parallel processing
+
+# Installation Instructions:
+# 1. Create a virtual environment:
+#    python -m venv rmtwin_env
+# 2. Activate the environment:
+#    - Windows: rmtwin_env\Scripts\activate
+#    - Unix/macOS: source rmtwin_env/bin/activate
+# 3. Install requirements:
+#    pip install -r requirements.txt
+
+# For GPU acceleration (optional):
+# Uncomment the following if you have CUDA-capable GPU
+# cupy-cuda11x>=10.0.0,<12.0.0  # Replace 11x with your CUDA version
+
+# Performance Note:
+# For maximum performance with parallel processing, also install:
+# pip install ray>=2.0.0,<3.0.0

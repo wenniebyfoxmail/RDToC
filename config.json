@@ -1,0 +1,45 @@
+{
+  "population_size": 2000,
+  "n_generations": 100,
+  "n_partitions": 6,
+  
+  "min_recall_threshold": 0.80,
+  "max_latency_seconds": 200.0,
+  "max_disruption_hours": 400.0,
+  "budget_cap_usd": 10000000,
+  "min_mtbf_hours": 1000,
+  "max_carbon_emissions_kgCO2e_year": 200000,
+  
+  "n_random_samples": 3000,
+  "grid_resolution": 5, 
+  "grid_max_evaluations": 3000, 
+  "grid_smart_sampling": true, 
+  "weight_combinations": 100,
+  
+  "road_network_length_km": 200.0,
+  "planning_horizon_years": 10,
+  "daily_wage_per_person": 500,
+  "carbon_intensity_factor": 0.4,
+  "scenario_type": "mixed",
+  
+  "output_dir": "./results",
+  "log_dir": "./results/logs",
+  "n_objectives": 6,
+  "crossover_prob": 0.9,
+  "crossover_eta": 20,
+  "mutation_eta": 20,
+  "use_parallel": true,
+  "n_processes": -1,
+  "data_retention_years": 3,
+  "enable_debug_output": true,
+  "depreciation_rate": 0.1,
+  "fos_sensor_spacing_km": 0.1,
+  "apply_seasonal_adjustments": true,
+  "traffic_volume_hourly": 2000,
+  "default_lane_closure_ratio": 0.3,
+  
+  "sensor_csv": "sensors_data.txt",
+  "algorithm_csv": "algorithms_data.txt",
+  "infrastructure_csv": "infrastructure_data.txt",
+  "cost_benefit_csv": "cost_benefit_data.txt"
+}

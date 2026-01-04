@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-01-01T00:16:34.078852",
+  "version": "7.0",
+  "figures": {
+    "fig1_pareto_scatter_6d": {
+      "pdf": "fig1_pareto_scatter_6d.pdf",
+      "png": "fig1_pareto_scatter_6d.png"
+    },
+    "fig2_decision_matrix": {
+      "pdf": "fig2_decision_matrix.pdf",
+      "png": "fig2_decision_matrix.png"
+    },
+    "fig3_3d_pareto": {
+      "pdf": "fig3_3d_pareto.pdf",
+      "png": "fig3_3d_pareto.png"
+    },
+    "fig4_parallel_coordinates": {
+      "pdf": "fig4_parallel_coordinates.pdf",
+      "png": "fig4_parallel_coordinates.png"
+    },
+    "fig5_cost_structure": {
+      "pdf": "fig5_cost_structure.pdf",
+      "png": "fig5_cost_structure.png"
+    },
+    "fig6_discrete_distributions": {
+      "pdf": "fig6_discrete_distributions.pdf",
+      "png": "fig6_discrete_distributions.png"
+    },
+    "fig7_technology_dominance": {
+      "pdf": "fig7_technology_dominance.pdf",
+      "png": "fig7_technology_dominance.png"
+    },
+    "fig8_baseline_comparison": {
+      "pdf": "fig8_baseline_comparison.pdf",
+      "png": "fig8_baseline_comparison.png"
+    },
+    "fig9_convergence": {
+      "pdf": "fig9_convergence.pdf",
+      "png": "fig9_convergence.png"
+    },
+    "fig10_ablation": {
+      "pdf": "fig10_ablation.pdf",
+      "png": "fig10_ablation.png"
+    },
+    "figS1_pairwise": {
+      "pdf": "figS1_pairwise.pdf",
+      "png": "figS1_pairwise.png"
+    },
+    "figS2_sensitivity": {
+      "pdf": "figS2_sensitivity.pdf",
+      "png": "figS2_sensitivity.png"
+    },
+    "figS3_3d_multi_view": {
+      "pdf": "figS3_3d_multi_view.pdf",
+      "png": "figS3_3d_multi_view.png"
+    },
+    "figS4_correlation_matrix": {
+      "pdf": "figS4_correlation_matrix.pdf",
+      "png": "figS4_correlation_matrix.png"
+    }
+  },
+  "tables": {
+    "table1_method_comparison": {
+      "csv": "table1_method_comparison.csv",
+      "tex": "table1_method_comparison.tex"
+    },
+    "table2_representative_solutions": {
+      "csv": "table2_representative_solutions.csv",
+      "tex": "table2_representative_solutions.tex"
+    },
+    "table3_statistical_tests": {
+      "csv": "table3_statistical_tests.csv",
+      "tex": "table3_statistical_tests.tex"
+    },
+    "table5_cost_analysis": {
+      "csv": "table5_cost_analysis.csv",
+      "tex": "table5_cost_analysis.tex"
+    },
+    "table4_ablation_summary": {
+      "csv": "table4_ablation_summary.csv",
+      "tex": "table4_ablation_summary.tex"
+    }
+  },
+  "data": {
+    "fig1_pareto_scatter_data": "fig1_pareto_scatter_data.csv",
+    "fig2_decision_matrix_data": "fig2_decision_matrix_data.csv",
+    "fig3_3d_pareto_data": "fig3_3d_pareto_data.csv",
+    "fig4_parallel_coords_data": "fig4_parallel_coords_data.csv",
+    "fig5_cost_structure_data": "fig5_cost_structure_data.csv",
+    "fig6_discrete_distributions_data": "fig6_discrete_distributions_data.csv",
+    "fig8_radar_data": "fig8_radar_data.csv",
+    "fig10_ablation_data": "fig10_ablation_data.csv",
+    "figS1_pairwise_data": "figS1_pairwise_data.csv",
+    "figS4_correlation_data": "figS4_correlation_data.csv"
+  }
+}

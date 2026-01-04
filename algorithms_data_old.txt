@@ -1,0 +1,21 @@
+Algorithm_Instance_Name,Algorithm_RDF_Type,Algorithm_Architecture,Task_Type,Precision,Recall,F1_Score,mIoU,mAP,FPS,Parameters_M,GFLOPs,Hardware_Requirement,Data_Annotation_Cost_USD,Model_Retraining_Freq_months,Explainability_Score,Processing_Cost_per_GB,Dataset_Used,Key_Features,Training_Requirements
+DL_YOLOv8_SOTA,DeepLearningAlgorithm,YOLOv8x,Detection,0.98,0.97,0.975,0,0.54,44,68.2,120.4,Standard_GPU,1.50,6,2,0.80,COCO+Custom,State-of-art real-time mAP@0.5:0.95,5000-images RTX3090
+DL_YOLOv8_Nano,DeepLearningAlgorithm,YOLOv8n,Detection,0.94,0.92,0.93,0,0.37,120,3.2,8.7,Standard_GPU,1.00,9,2,0.40,COCO+Custom,Lightweight edge-ready,2000-images RTX3060
+DL_YOLOv7_Standard,DeepLearningAlgorithm,YOLOv7,Detection,0.96,0.94,0.95,0,0.51,45,36.9,104.7,Standard_GPU,1.20,6,2,0.60,Custom-10k,Proven architecture,3000-images
+DL_YOLOv5s_Optimized,DeepLearningAlgorithm,YOLOv5s,Detection,0.92,0.90,0.91,0,0.36,85,7.2,16.5,Standard_GPU,0.80,9,2,0.45,COCO-Pretrained,Fast reliable,2000-images
+DL_AttentionUNet_Crack,DeepLearningAlgorithm,Attention-U-Net,Segmentation,0.95,0.93,0.94,0.67,0,20,34.5,45.8,Standard_GPU,2.00,6,2,1.20,CrackForest,High-accuracy segmentation,Pixel-level-annotation
+DL_SAM_Detectron2,DeepLearningAlgorithm,SAM+Detectron2,Detection-Segmentation,0.90,0.88,0.89,0.69,0.48,15,180.5,210.3,HighEnd_GPU,3.00,3,1,1.80,Mixed-Dataset,Foundation-model advanced,Large-dataset
+DL_UNet_Standard,DeepLearningAlgorithm,U-Net,Segmentation,0.88,0.85,0.865,0.60,0,25,31.0,40.5,Standard_GPU,1.50,9,2,0.90,DeepCrack,Classic segmentation,Pixel-annotation
+DL_MaskRCNN_ResNet50,DeepLearningAlgorithm,Mask-RCNN,Instance-Segmentation,0.87,0.84,0.855,0.58,0.42,18,44.2,95.5,Standard_GPU,2.50,6,2,1.10,COCO+Custom,Instance-level detection,Complex-annotation
+DL_MobileNetV3_Edge,DeepLearningAlgorithm,MobileNetV3,Classification,0.85,0.82,0.835,0,0,100,5.4,0.22,Edge_Device,0.50,12,3,0.25,ImageNet+Crack,Mobile-optimized,Transfer-learning
+DL_EfficientNet_B0,DeepLearningAlgorithm,EfficientNet-B0,Classification,0.86,0.83,0.845,0,0,80,5.3,0.39,Standard_GPU,0.60,12,3,0.30,Crack-Dataset,Efficient scaling,Small-dataset
+ML_SVM_Optimized,MachineLearningAlgorithm,SVM-RBF,Classification,0.92,0.89,0.905,0,0,25,0.01,0.001,CPU,0.00,24,4,0.15,Feature-Based,High-accuracy CPU-only,Feature-engineering
+ML_RandomForest_Fast,MachineLearningAlgorithm,Random-Forest,Classification,0.90,0.88,0.89,0,0,30,0.05,0.01,CPU,0.00,24,4,0.12,Feature-Based,Robust fast,Standard-features
+ML_XGBoost_Tuned,MachineLearningAlgorithm,XGBoost,Classification,0.91,0.89,0.90,0,0,35,0.1,0.02,CPU,0.00,18,4,0.18,Structured-Data,State-of-art ML,Hyperparameter-tuning
+Traditional_Canny_Optimized,TraditionalAlgorithm,Canny-Edge,Detection,0.72,0.68,0.70,0,0,150,0.001,0.1,CPU,0.00,N/A,5,0.08,Grayscale,Fast simple,Parameter-tuning
+Traditional_Otsu_Enhanced,TraditionalAlgorithm,Otsu-Threshold,Segmentation,0.70,0.65,0.675,0,0,180,0.001,0.05,CPU,0.00,N/A,5,0.06,Grayscale,Automatic threshold,Good-lighting
+Traditional_Morphology,TraditionalAlgorithm,Morphological,Enhancement,0.68,0.63,0.655,0,0,200,0.001,0.03,CPU,0.00,N/A,5,0.05,Binary,Preprocessing,Clean-images
+Hybrid_CNN_SVM,DeepLearningAlgorithm,CNN+SVM,Classification,0.95,0.93,0.94,0,0,20,15.5,25.3,Standard_GPU,1.00,12,3,0.70,Mixed-Approach,Feature+classifier,Moderate-training
+DL_RetinaNet_Focal,DeepLearningAlgorithm,RetinaNet,Detection,0.89,0.86,0.875,0,0.45,40,36.4,67.9,Standard_GPU,1.20,9,2,0.75,Open-Images,Focal-loss one-stage,Imbalanced-data
+DL_FasterRCNN_FPN,DeepLearningAlgorithm,Faster-RCNN-FPN,Detection,0.88,0.85,0.865,0,0.43,22,41.8,85.6,Standard_GPU,1.40,9,2,0.85,COCO-Based,Two-stage accurate,Standard-training
+Edge_TinyYOLO_v4,DeepLearningAlgorithm,Tiny-YOLOv4,Detection,0.82,0.78,0.80,0,0.28,150,6.1,6.9,Edge_Device,0.40,12,3,0.20,Compressed,Ultra-light fast,Limited-accuracy

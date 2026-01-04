@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "shacl_audit": {
+    "status": "completed",
+    "pass_ratio": 1.0,
+    "pass_count": 31,
+    "total_count": 31
+  }
+}

@@ -1,0 +1,528 @@
+#!/usr/bin/env python3
+"""
+Result Visualization Module for RMTwin Optimization
+All visualization functions in one place
+"""
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+import logging
+
+logger = logging.getLogger(__name__)
+
+# Publication quality settings
+plt.rcParams.update({
+    'font.size': 11,
+    'axes.titlesize': 12,
+    'axes.labelsize': 11,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
+    'legend.fontsize': 9,
+    'figure.titlesize': 14,
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman', 'DejaVu Serif'],
+    'text.usetex': False,
+    'figure.dpi': 150,
+    'savefig.dpi': 300,
+    'savefig.bbox': 'tight',
+    'lines.linewidth': 1.5,
+    'lines.markersize': 6,
+})
+
+
+class ResultVisualizer:
+    """Handles all visualization tasks"""
+    
+    def __init__(self, config):
+        self.config = config
+        self.output_dir = Path(config.output_dir) / 'figures'
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Color scheme
+        self.colors = {
+            'nsga2': '#d62728',
+            'random': '#1f77b4',
+            'grid': '#ff7f0e',
+            'weighted': '#2ca02c',
+            'expert': '#9467bd',
+            'pareto': '#e377c2'
+        }
+    
+    def load_results(self, filename: str) -> pd.DataFrame:
+        """Load results from CSV"""
+        path = self.config.output_dir / filename
+        if not path.exists():
+            logger.error(f"File not found: {path}")
+            return pd.DataFrame()
+        return pd.read_csv(path)
+    
+    def create_all_figures(self, pareto_results: pd.DataFrame, 
+                          baseline_results: Optional[Dict[str, pd.DataFrame]] = None):
+        """Generate all publication figures"""
+        
+        # Figure 1: Pareto Front Projections
+        self.create_pareto_projections(pareto_results)
+        
+        # Figure 2: Objective Space Analysis
+        self.create_objective_analysis(pareto_results)
+        
+        # Figure 3: Technology Distribution
+        self.create_technology_analysis(pareto_results)
+        
+        # Figure 4: Performance Comparison (if baselines available)
+        if baseline_results:
+            self.create_baseline_comparison(pareto_results, baseline_results)
+        
+        logger.info(f"All figures saved to {self.output_dir}")
+    
+    def create_pareto_projections(self, df: pd.DataFrame):
+        """Figure 1: Key 2D Pareto Front Projections"""
+        fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+        fig.suptitle('Pareto Front Projections for Key Trade-offs', fontsize=14)
+        
+        projections = [
+            ('f1_total_cost_USD', 'detection_recall', 'Cost vs Performance', 
+             1000, 1, 'k$', '', axes[0,0]),
+            ('f1_total_cost_USD', 'f5_carbon_emissions_kgCO2e_year', 
+             'Cost vs Sustainability', 1000, 1000, 'k$', 'tons CO₂/year', axes[0,1]),
+            ('detection_recall', 'f3_latency_seconds', 
+             'Performance vs Speed', 1, 1, '', 'seconds', axes[1,0]),
+            ('f5_carbon_emissions_kgCO2e_year', 'system_MTBF_hours', 
+             'Sustainability vs Reliability', 1000, 8760, 'tons CO₂/year', 'years', axes[1,1])
+        ]
+        
+        for x_col, y_col, title, x_scale, y_scale, x_unit, y_unit, ax in projections:
+            # Scale data
+            x_data = df[x_col] / x_scale
+            y_data = df[y_col] / y_scale
+            
+            # Plot all points
+            ax.scatter(x_data, y_data, c='lightblue', s=50, alpha=0.6, 
+                      edgecolors='black', linewidth=0.5)
+            
+            # Find and highlight Pareto front
+            pareto_mask = self._find_pareto_front_2d(df[x_col].values, df[y_col].values,
+                                                     x_col != 'detection_recall',
+                                                     y_col not in ['detection_recall', 'system_MTBF_hours'])
+            
+            if np.any(pareto_mask):
+                ax.scatter(x_data[pareto_mask], y_data[pareto_mask], 
+                          c='red', s=100, marker='s', alpha=0.8, 
+                          edgecolors='darkred', linewidth=2, label='Pareto Front')
+            
+            # Labels
+            x_label = x_col.replace('_', ' ').replace('f1 ', '').replace('f5 ', '')
+            y_label = y_col.replace('_', ' ').replace('f1 ', '').replace('f5 ', '')
+            
+            if x_unit:
+                x_label = f"{x_label} ({x_unit})"
+            if y_unit:
+                y_label = f"{y_label} ({y_unit})"
+            
+            ax.set_xlabel(x_label)
+            ax.set_ylabel(y_label)
+            ax.set_title(title)
+            ax.grid(True, alpha=0.3)
+            
+            if np.any(pareto_mask):
+                ax.legend()
+        
+        plt.tight_layout()
+        self._save_figure(fig, 'figure_1_pareto_projections')
+    
+    def create_objective_analysis(self, df: pd.DataFrame):
+        """Figure 2: Comprehensive Objective Analysis"""
+        fig = plt.figure(figsize=(12, 10))
+        
+        # 1. Parallel Coordinates
+        ax1 = plt.subplot(3, 1, 1)
+        self._plot_parallel_coordinates(df, ax1)
+        
+        # 2. Correlation Matrix
+        ax2 = plt.subplot(3, 2, 3)
+        self._plot_correlation_matrix(df, ax2)
+        
+        # 3. Objective Distributions
+        ax3 = plt.subplot(3, 2, 4)
+        self._plot_objective_distributions(df, ax3)
+        
+        # 4. Trade-off Table
+        ax4 = plt.subplot(3, 1, 3)
+        self._plot_extreme_solutions_table(df, ax4)
+        
+        plt.suptitle('Multi-Objective Analysis of Pareto Solutions', fontsize=14)
+        plt.tight_layout()
+        self._save_figure(fig, 'figure_2_objective_analysis')
+    
+    def create_technology_analysis(self, df: pd.DataFrame):
+        """Figure 3: Technology and Configuration Analysis"""
+        fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+        fig.suptitle('Technology Distribution in Pareto Set', fontsize=14)
+        
+        # 1. Sensor distribution
+        self._plot_technology_distribution(df, 'sensor', axes[0,0], 'Sensor Technologies')
+        
+        # 2. Algorithm distribution
+        self._plot_technology_distribution(df, 'algorithm', axes[0,1], 'Detection Algorithms')
+        
+        # 3. Deployment strategies
+        self._plot_technology_distribution(df, 'deployment', axes[1,0], 'Deployment Strategies')
+        
+        # 4. Performance by technology
+        self._plot_technology_performance(df, axes[1,1])
+        
+        plt.tight_layout()
+        self._save_figure(fig, 'figure_3_technology_analysis')
+    
+    def create_baseline_comparison(self, pareto_df: pd.DataFrame, 
+                                 baseline_results: Dict[str, pd.DataFrame]):
+        """Figure 4: Baseline Method Comparison"""
+        fig = plt.figure(figsize=(14, 10))
+        
+        # 1. Solution quality comparison
+        ax1 = plt.subplot(2, 2, 1)
+        self._plot_solution_quality_comparison(pareto_df, baseline_results, ax1)
+        
+        # 2. Objective space coverage
+        ax2 = plt.subplot(2, 2, 2)
+        self._plot_objective_space_coverage(pareto_df, baseline_results, ax2)
+        
+        # 3. Computational efficiency
+        ax3 = plt.subplot(2, 2, 3)
+        self._plot_computational_efficiency(baseline_results, ax3)
+        
+        # 4. Best solution comparison
+        ax4 = plt.subplot(2, 2, 4)
+        self._plot_best_solutions_radar(pareto_df, baseline_results, ax4)
+        
+        plt.suptitle('Comparison of Optimization Methods', fontsize=14)
+        plt.tight_layout()
+        self._save_figure(fig, 'figure_4_baseline_comparison')
+    
+    # Helper methods
+    def _find_pareto_front_2d(self, x: np.ndarray, y: np.ndarray, 
+                             x_minimize: bool = True, y_minimize: bool = True) -> np.ndarray:
+        """Find 2D Pareto front"""
+        n = len(x)
+        pareto_mask = np.ones(n, dtype=bool)
+        
+        for i in range(n):
+            for j in range(n):
+                if i != j:
+                    if x_minimize:
+                        x_dominates = x[j] <= x[i]
+                    else:
+                        x_dominates = x[j] >= x[i]
+                    
+                    if y_minimize:
+                        y_dominates = y[j] <= y[i]
+                    else:
+                        y_dominates = y[j] >= y[i]
+                    
+                    if x_dominates and y_dominates:
+                        if ((x_minimize and x[j] < x[i]) or 
+                            (not x_minimize and x[j] > x[i]) or
+                            (y_minimize and y[j] < y[i]) or 
+                            (not y_minimize and y[j] > y[i])):
+                            pareto_mask[i] = False
+                            break
+        
+        return pareto_mask
+    
+    def _plot_parallel_coordinates(self, df: pd.DataFrame, ax):
+        """Plot parallel coordinates"""
+        # Normalize objectives
+        objectives = ['f1_total_cost_USD', 'detection_recall', 'f3_latency_seconds',
+                     'f5_carbon_emissions_kgCO2e_year', 'system_MTBF_hours']
+        
+        data = df[objectives].copy()
+        
+        # Normalize to [0,1] where 1 is best
+        for col in objectives:
+            if col in ['detection_recall', 'system_MTBF_hours']:
+                # Maximize
+                data[col] = (data[col] - data[col].min()) / (data[col].max() - data[col].min())
+            else:
+                # Minimize
+                data[col] = 1 - (data[col] - data[col].min()) / (data[col].max() - data[col].min())
+        
+        # Plot
+        x = np.arange(len(objectives))
+        for idx in range(min(len(data), 50)):  # Limit to 50 solutions for clarity
+            y = data.iloc[idx].values
+            ax.plot(x, y, 'b-', alpha=0.3, linewidth=1)
+        
+        ax.set_xticks(x)
+        ax.set_xticklabels(['Cost', 'Recall', 'Latency', 'Carbon', 'MTBF'], rotation=45)
+        ax.set_ylabel('Normalized Value (1=best)')
+        ax.set_title('Parallel Coordinates of Pareto Solutions')
+        ax.grid(True, alpha=0.3)
+    
+    def _plot_correlation_matrix(self, df: pd.DataFrame, ax):
+        """Plot correlation matrix"""
+        objectives = ['f1_total_cost_USD', 'detection_recall', 'f3_latency_seconds',
+                     'f5_carbon_emissions_kgCO2e_year', 'system_MTBF_hours']
+        
+        corr = df[objectives].corr()
+        
+        # Rename for display
+        display_names = ['Cost', 'Recall', 'Latency', 'Carbon', 'MTBF']
+        corr.index = display_names
+        corr.columns = display_names
+        
+        # Plot
+        sns.heatmap(corr, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
+                   vmin=-1, vmax=1, square=True, ax=ax)
+        ax.set_title('Objective Correlations')
+    
+    def _plot_objective_distributions(self, df: pd.DataFrame, ax):
+        """Plot objective value distributions"""
+        data = [
+            df['f1_total_cost_USD'] / 1000,  # k$
+            df['detection_recall'],
+            df['f3_latency_seconds'],
+            df['f5_carbon_emissions_kgCO2e_year'] / 1000,  # tons
+            df['system_MTBF_hours'] / 8760  # years
+        ]
+        
+        labels = ['Cost (k$)', 'Recall', 'Latency (s)', 'Carbon (t/y)', 'MTBF (y)']
+        
+        bp = ax.boxplot(data, labels=labels, patch_artist=True)
+        
+        # Color boxes
+        colors = plt.cm.Set3(np.linspace(0, 1, len(data)))
+        for patch, color in zip(bp['boxes'], colors):
+            patch.set_facecolor(color)
+        
+        ax.set_title('Objective Value Distributions')
+        ax.set_ylabel('Value')
+        ax.tick_params(axis='x', rotation=45)
+    
+    def _plot_extreme_solutions_table(self, df: pd.DataFrame, ax):
+        """Plot table of extreme solutions"""
+        ax.axis('tight')
+        ax.axis('off')
+        
+        # Find extreme solutions
+        extremes = {
+            'Min Cost': df.loc[df['f1_total_cost_USD'].idxmin()],
+            'Max Recall': df.loc[df['detection_recall'].idxmax()],
+            'Min Latency': df.loc[df['f3_latency_seconds'].idxmin()],
+            'Min Carbon': df.loc[df['f5_carbon_emissions_kgCO2e_year'].idxmin()],
+            'Max MTBF': df.loc[df['system_MTBF_hours'].idxmax()]
+        }
+        
+        # Create table data
+        table_data = []
+        for name, sol in extremes.items():
+            table_data.append([
+                name,
+                sol['sensor'][:15],
+                sol['algorithm'][:15],
+                f"${sol['f1_total_cost_USD']/1000:.0f}k",
+                f"{sol['detection_recall']:.3f}",
+                f"{sol['f3_latency_seconds']:.1f}s",
+                f"{sol['f5_carbon_emissions_kgCO2e_year']/1000:.1f}t",
+                f"{sol['system_MTBF_hours']/8760:.1f}y"
+            ])
+        
+        table = ax.table(cellText=table_data,
+                        colLabels=['Objective', 'Sensor', 'Algorithm', 'Cost', 
+                                  'Recall', 'Latency', 'Carbon', 'MTBF'],
+                        cellLoc='center', loc='center')
+        
+        table.auto_set_font_size(False)
+        table.set_fontsize(9)
+        table.scale(1, 1.5)
+        
+        ax.set_title('Extreme Solutions in Pareto Set', pad=20)
+    
+    def _plot_technology_distribution(self, df: pd.DataFrame, col: str, ax, title: str):
+        """Plot distribution of a technology type"""
+        counts = df[col].value_counts()
+        
+        # Limit to top 10
+        if len(counts) > 10:
+            counts = counts.head(10)
+        
+        bars = ax.bar(range(len(counts)), counts.values, 
+                      color=plt.cm.Set3(np.linspace(0, 1, len(counts))))
+        
+        ax.set_xticks(range(len(counts)))
+        ax.set_xticklabels([x[:15] for x in counts.index], rotation=45, ha='right')
+        ax.set_ylabel('Count')
+        ax.set_title(title)
+        
+        # Add percentage labels
+        for bar, count in zip(bars, counts.values):
+            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+                   f'{count/len(df)*100:.0f}%', ha='center', va='bottom', fontsize=8)
+    
+    def _plot_technology_performance(self, df: pd.DataFrame, ax):
+        """Plot average performance by sensor type"""
+        # Extract sensor type
+        df['sensor_type'] = df['sensor'].str.extract(r'(\w+)_')[0]
+        
+        # Calculate average performance
+        perf = df.groupby('sensor_type').agg({
+            'detection_recall': 'mean',
+            'f1_total_cost_USD': 'mean',
+            'f5_carbon_emissions_kgCO2e_year': 'mean'
+        })
+        
+        # Normalize
+        perf_norm = perf.copy()
+        for col in perf_norm.columns:
+            if col == 'detection_recall':
+                perf_norm[col] = perf[col]
+            else:
+                perf_norm[col] = 1 - (perf[col] - perf[col].min()) / (perf[col].max() - perf[col].min())
+        
+        # Plot
+        perf_norm.plot(kind='bar', ax=ax)
+        ax.set_ylabel('Normalized Score (1=best)')
+        ax.set_title('Average Performance by Sensor Type')
+        ax.legend(['Recall', 'Cost Efficiency', 'Sustainability'])
+        ax.tick_params(axis='x', rotation=45)
+    
+    def _plot_solution_quality_comparison(self, pareto_df: pd.DataFrame,
+                                        baseline_results: Dict[str, pd.DataFrame], ax):
+        """Compare solution quality across methods"""
+        # Count feasible solutions
+        counts = {'NSGA-II': len(pareto_df)}
+        
+        for method, df in baseline_results.items():
+            counts[method] = df['is_feasible'].sum() if 'is_feasible' in df else len(df)
+        
+        # Plot
+        bars = ax.bar(counts.keys(), counts.values(), color=self.colors.values())
+        ax.set_ylabel('Number of Feasible Solutions')
+        ax.set_title('Solution Quality Comparison')
+        
+        # Add value labels
+        for bar in bars:
+            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+                   f'{int(bar.get_height())}', ha='center', va='bottom')
+    
+    def _plot_objective_space_coverage(self, pareto_df: pd.DataFrame,
+                                     baseline_results: Dict[str, pd.DataFrame], ax):
+        """Plot coverage in cost-recall space"""
+        # NSGA-II
+        ax.scatter(pareto_df['f1_total_cost_USD']/1000, 
+                  pareto_df['detection_recall'],
+                  c=self.colors['nsga2'], s=100, alpha=0.6, 
+                  label='NSGA-II', edgecolors='black', linewidth=1)
+        
+        # Baselines
+        for i, (method, df) in enumerate(baseline_results.items()):
+            if len(df) > 0 and 'is_feasible' in df:
+                feasible = df[df['is_feasible']]
+                if len(feasible) > 0:
+                    ax.scatter(feasible['f1_total_cost_USD']/1000,
+                             feasible['detection_recall'],
+                             c=list(self.colors.values())[i+1], s=50, alpha=0.5,
+                             label=method.title(), marker='o')
+        
+        ax.set_xlabel('Total Cost (k$)')
+        ax.set_ylabel('Detection Recall')
+        ax.set_title('Objective Space Coverage')
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+    
+    def _plot_computational_efficiency(self, baseline_results: Dict[str, pd.DataFrame], ax):
+        """Plot computational time comparison"""
+        # Dummy data for illustration (replace with actual timing)
+        times = {
+            'NSGA-II': 300,
+            'Random': 50,
+            'Grid': 100,
+            'Weighted': 80,
+            'Expert': 5
+        }
+        
+        bars = ax.bar(times.keys(), times.values(), color=self.colors.values())
+        ax.set_ylabel('Computation Time (seconds)')
+        ax.set_title('Computational Efficiency')
+        
+        # Add value labels
+        for bar in bars:
+            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+                   f'{int(bar.get_height())}s', ha='center', va='bottom')
+    
+    def _plot_best_solutions_radar(self, pareto_df: pd.DataFrame,
+                                  baseline_results: Dict[str, pd.DataFrame], ax):
+        """Radar chart comparing best solutions"""
+        from matplotlib.patches import Circle
+        from matplotlib.path import Path
+        from matplotlib.patches import PathPatch
+        
+        # Switch to polar projection
+        ax.remove()
+        ax = plt.subplot(2, 2, 4, projection='polar')
+        
+        # Objectives
+        objectives = ['Cost', 'Recall', 'Speed', 'Carbon', 'Reliability']
+        n_obj = len(objectives)
+        
+        # Angles
+        angles = np.linspace(0, 2 * np.pi, n_obj, endpoint=False).tolist()
+        angles += angles[:1]  # Complete the circle
+        
+        # Get best solution from each method
+        methods_data = {}
+        
+        # NSGA-II best (balanced)
+        pareto_norm = self._normalize_for_radar(pareto_df)
+        best_idx = pareto_norm.sum(axis=1).idxmax()
+        methods_data['NSGA-II'] = pareto_norm.iloc[best_idx].tolist() + [pareto_norm.iloc[best_idx].iloc[0]]
+        
+        # Baseline bests
+        for method, df in baseline_results.items():
+            if len(df) > 0 and 'is_feasible' in df:
+                feasible = df[df['is_feasible']]
+                if len(feasible) > 0:
+                    norm = self._normalize_for_radar(feasible)
+                    best_idx = norm.sum(axis=1).idxmax()
+                    methods_data[method] = norm.iloc[best_idx].tolist() + [norm.iloc[best_idx].iloc[0]]
+        
+        # Plot
+        for method, values in methods_data.items():
+            ax.plot(angles, values, 'o-', linewidth=2, label=method)
+            ax.fill(angles, values, alpha=0.15)
+        
+        # Configure
+        ax.set_xticks(angles[:-1])
+        ax.set_xticklabels(objectives)
+        ax.set_ylim(0, 1)
+        ax.set_title('Best Solution Comparison', pad=20)
+        ax.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1))
+        ax.grid(True)
+    
+    def _normalize_for_radar(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Normalize objectives for radar chart"""
+        cols = ['f1_total_cost_USD', 'detection_recall', 'f3_latency_seconds',
+                'f5_carbon_emissions_kgCO2e_year', 'system_MTBF_hours']
+        
+        result = pd.DataFrame()
+        
+        for col in cols:
+            if col in ['detection_recall', 'system_MTBF_hours']:
+                # Maximize
+                result[col] = (df[col] - df[col].min()) / (df[col].max() - df[col].min() + 1e-10)
+            else:
+                # Minimize
+                result[col] = 1 - (df[col] - df[col].min()) / (df[col].max() - df[col].min() + 1e-10)
+        
+        return result
+    
+    def _save_figure(self, fig, filename: str):
+        """Save figure in multiple formats"""
+        for fmt in ['png', 'pdf']:
+            path = self.output_dir / f"{filename}.{fmt}"
+            fig.savefig(path, dpi=300 if fmt == 'png' else None, bbox_inches='tight')
+        plt.close(fig)
+        logger.info(f"Saved figure: {filename}")

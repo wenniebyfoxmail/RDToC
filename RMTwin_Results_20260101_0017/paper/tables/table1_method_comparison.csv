@@ -1,0 +1,2 @@
+Method,Total,Feasible,Min Cost ($),Max Recall
+NSGA-III,31,31,"310,426",0.9897

@@ -1,0 +1,11 @@
+{
+  "run_dir": "results/runs/20260101_001125_seed42",
+  "seed": 42,
+  "pareto_solutions": 31,
+  "baseline_feasible": 0,
+  "validation_passed": true,
+  "shacl_pass_ratio": 1.0,
+  "total_time_seconds": 293.3066842556,
+  "min_cost": 310426.14129051747,
+  "max_cost": 7324799.70168744
+}

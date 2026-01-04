@@ -1,0 +1,6 @@
+mode,mode_name,short_name,validity_rate,validity_std,n_false_feasible,feasible_rate_true
+full_ontology,Full Ontology,Full,1.0,0.0,0,0.131
+no_type_inference,No Type Inference,No Type,0.6745245337778938,0.0338939546190806,115,0.131
+no_compatibility,No Compatibility,No Compat,1.0,0.0,0,0.131
+noise_30,Property ±30%,±30% Noise,0.8333333333333334,0.1360827634879543,0,0.131
+combined_degraded,Combined Degraded,Combined,1.0,0.0,0,0.131

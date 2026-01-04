@@ -1,0 +1,22 @@
+Component_Instance_Name,Component_RDF_Type,Component_Category,Technology,Key_Features,Data_Format,Initial_Cost_USD,Annual_OpCost_USD,Processing_Time_Factor,Bandwidth_Mbps,Storage_Capacity_TB,Energy_Consumption_W,MTBF_hours,Integration_Complexity,Cybersecurity_Vulnerability,Storage_Cost_per_GB_Year,Advantages,Disadvantages,Use_Case
+Storage_AWS_S3_Standard,StorageSystem,Cloud-Storage,AWS-S3,Standard-tier scalable,All-formats,0,258000,1.0,0,1000,50,999999,1,3,0.276,Pay-per-use proven,Ongoing-costs,Active-data
+Storage_AWS_S3_Glacier,StorageSystem,Cloud-Archive,AWS-Glacier-Deep,Long-term-archive,All-formats,0,11880,2.0,0,1000,50,999999,1,3,0.012,Extremely-cheap,Slow-retrieval,Archive-data
+Storage_Azure_Blob_Hot,StorageSystem,Cloud-Storage,Azure-Hot,Microsoft-ecosystem,All-formats,0,221184,1.0,0,1000,50,999999,1,3,0.264,Azure-integration,Vendor-lock,Active-storage
+Storage_Google_Cloud,StorageSystem,Cloud-Storage,Google-Standard,ML-integration,All-formats,0,240000,1.0,0,1000,50,999999,1,3,0.240,BigQuery-ready,Google-dependency,AI-workflows
+Storage_OnPrem_Enterprise,StorageSystem,Local-Storage,Enterprise-NAS,Full-control,All-formats,150000,27500,0.8,0,200,500,175000,3,2,0.100,Low-latency secure,High-initial,Security-critical
+Storage_Hybrid_Tiered,StorageSystem,Hybrid-Storage,Hot-Cold-Archive,Optimized-tiers,All-formats,80000,35000,0.9,0,500,350,180000,4,3,0.175,Cost-performance,Complex-management,Balanced
+Communication_5G_SmallCell,CommunicationSystem,5G-Network,Small-Cell,Urban-deployment,All-formats,35000,4000,0.1,1000,0,400,70000,4,4,N/A,Ultra-low-latency,Limited-coverage,Dense-urban
+Communication_4G_Rural,CommunicationSystem,4G-LTE,Macro-Cell,Wide-coverage,All-formats,300000,50000,0.3,150,0,2000,100000,5,3,N/A,Proven-coverage,Higher-latency,Rural-areas
+Communication_LoRaWAN_Gateway,CommunicationSystem,IoT-Network,LoRaWAN,Long-range-IoT,JSON/Binary,1200,600,2.0,0.05,0,15,60000,2,4,N/A,Low-power cheap,Very-low-bandwidth,Sensor-networks
+Communication_V2X_RSU,CommunicationSystem,V2X-DSRC,Roadside-Unit,Vehicle-comm,DSRC-Protocol,10000,2000,0.05,10,0,50,80000,3,3,N/A,Real-time V2X,Limited-adoption,Connected-vehicles
+Communication_Fiber_Metro,CommunicationSystem,Fiber-Optic,Metro-Fiber,Backbone-network,All-formats,200000,15000,0.02,10000,0,100,500000,5,1,N/A,Unlimited-bandwidth,Installation-cost,Backbone
+Deployment_Jetson_OrinNano,ComputeDeployment,Edge-AI,NVIDIA-Orin-Nano,67-TOPS edge,AI-Models,249,500,1.5,0,0,15,50000,2,3,N/A,Affordable-AI,Limited-compute,Edge-inference
+Deployment_Jetson_AGX_Orin,ComputeDeployment,Edge-AI,NVIDIA-AGX-Orin,275-TOPS powerful,AI-Models,1999,1000,0.8,0,0,60,60000,3,3,N/A,Powerful-edge,Higher-cost,Complex-AI
+Deployment_Intel_NUC_Extreme,ComputeDeployment,Edge-Server,Intel-NUC,Ruggedized-edge,All-formats,5000,2000,1.2,0,2,350,70000,3,3,N/A,Flexible robust,Moderate-power,General-edge
+Deployment_Cloud_GPU_A4000,ComputeDeployment,Cloud-GPU,RTX-A4000,Professional-GPU,AI-Models,0,8760,0.5,0,0,140,80000,1,3,N/A,Good-performance,Hourly-costs,AI-inference
+Deployment_Cloud_H100,ComputeDeployment,Cloud-GPU,NVIDIA-H100,Top-tier-AI,AI-Models,0,35040,0.2,0,0,700,70000,2,3,N/A,Extreme-performance,Very-expensive,Training
+Storage_PostgreSQL_PostGIS,StorageSystem,Database,PostgreSQL,Spatial-database,GeoJSON/WKT,15000,5000,1.0,0,10,200,200000,3,3,0.50,Open-source spatial,Maintenance-needed,GIS-data
+Integration_ArcGIS_Server,SystemIntegration,GIS-Platform,Esri-ArcGIS,Enterprise-GIS,GIS-formats,75000,25000,1.0,0,5,300,180000,4,3,N/A,Industry-standard,Expensive-licenses,Enterprise
+Integration_QGIS_Server,SystemIntegration,GIS-Platform,QGIS,Open-source-GIS,GIS-formats,5000,15000,1.2,0,2,300,170000,3,3,N/A,Free powerful,Limited-support,Cost-conscious
+Processing_EdgeTPU,ProcessingSystem,Edge-AI,Google-Coral,4-TOPS efficient,TensorFlow,150,200,2.0,0,0,2,40000,2,3,N/A,Ultra-low-power,Limited-models,IoT-inference
+Processing_GPU_Server,ProcessingSystem,GPU-Compute,RTX-A6000,48GB-VRAM,All-formats,45000,5000,0.3,0,0,300,60000,3,2,N/A,Powerful balanced,High-initial,Local-AI

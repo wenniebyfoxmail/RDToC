@@ -1,0 +1,40 @@
+{
+  "analysis_date": "2026-01-01T00:16:52.191576",
+  "min_cost_solution": {
+    "cost_usd": 310426.14129051747,
+    "cost_per_km_year": 62.0852282581035,
+    "sensor": "Camera_FLIR_A700",
+    "sensor_type": "Camera",
+    "algorithm": "Traditional_Canny_Optimized",
+    "recall": 0.8712476788937645,
+    "crew_size": 1,
+    "inspection_cycle_days": 91,
+    "data_gb_per_year": 64.18375546428551
+  },
+  "cost_by_sensor_type": {
+    "Camera": {
+      "count": 18,
+      "min_cost": 310426.14129051747,
+      "max_cost": 3299610.6113514258,
+      "mean_cost": 1184382.7179883802
+    },
+    "IoT": {
+      "count": 13,
+      "min_cost": 4543081.130702133,
+      "max_cost": 7324799.70168744,
+      "mean_cost": 5298677.763040561
+    }
+  },
+  "potential_issues": [
+    "Min cost $310,426 is below expected $500,000 for 500km 10-year network"
+  ],
+  "recommendations": [],
+  "cost_range_comparison": {
+    "expected_min": 500000,
+    "expected_max": 10000000,
+    "actual_min": 310426.14129051747,
+    "actual_max": 7324799.70168744,
+    "min_ratio": 0.620852282581035,
+    "range_reasonable": true
+  }
+}

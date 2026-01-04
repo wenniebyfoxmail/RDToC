@@ -1,0 +1,51 @@
+Analysis_Category,Metric_Name,Value,Unit,Source_Organization,Notes,Application_Context
+Cost_Savings,Preventive_vs_Reactive,25,Percent,MDOT_Studies_2023,Michigan-DOT-verified lifecycle-savings,General maintenance
+Cost_Savings,California_DOT_Efficiency,237,Million_USD,Caltrans_2023,Includes-pavement-recycling bundling,State-wide program
+Cost_Savings,Hot_InPlace_Recycling,50,Percent,DOT_Studies,Versus-conventional-overlay,Pavement rehabilitation
+Cost_Savings,Full_Depth_Reclamation,67,Percent,Field_Studies,7.25-vs-16.12-per-sqm,Major reconstruction
+Cost_Savings,Crack_Sealing_Lifecycle,24,Percent,35_Year_Analysis,Despite-45-percent-higher-initial,Long-term savings
+Cost_Savings,Digital_Twin_Global,280,Billion_USD,Market_Projection_2030,Infrastructure-savings worldwide,Digital transformation
+Operational_Efficiency,MMS_Coverage_Highway,150,km_per_day,Field_Data_2024,Highway-speed-scanning,Network inspection
+Operational_Efficiency,Crack_Sealing_Productivity,20000,Linear_feet_per_day,Industry_Average,Professional-crew average,Standard operation
+Operational_Efficiency,Mobile_LiDAR_vs_LAMP,51,Percent_Savings,Cost_Analysis,3800-vs-7800-per-mile,Inspection costs
+Operational_Efficiency,UAV_Coverage_Rate,2.5,km2_per_mission,DJI_L2_Specs,Single-battery flight,Area coverage
+Algorithm_Performance,YOLOv8_Precision,97,Percent,Research_2024,State-of-art-model,Crack detection
+Algorithm_Performance,YOLOv8_Recall,95,Percent,Research_2024,With-proper-training,Crack detection
+Algorithm_Performance,YOLOv8_Speed,44,FPS,Benchmark_RTX3090,ONNX-optimized realistic,GPU inference
+Algorithm_Performance,Traditional_Speed,150,Images_per_second,CPU_Benchmark,Canny-edge-detection,CPU only
+Algorithm_Performance,False_Positive_Rate,7.5,Percent,Field_Studies,Multi-sensor-fusion helps,Automated detection
+Data_Management,MMS_LiDAR_Volume,5.2,GB_per_km,Riegl_VMX2HA,Dual-scanner-configuration,High-density scan
+Data_Management,UAV_LiDAR_Volume,1.5,GB_per_km,Industry_Average,Standard-density,Aerial survey
+Data_Management,Camera_HD_Volume,1.0,GB_per_km,1080p_Video,Compressed-H264,Visual inspection
+Data_Management,AWS_S3_Cost,0.023,USD_per_GB_month,AWS_Pricing_2024,Standard-tier,Cloud storage
+Equipment_Investment,MMS_System_Range,150000,USD_Low_End,Market_2024,Basic-configuration,Entry level
+Equipment_Investment,MMS_System_Premium,580000,USD_High_End,Market_2024,Full-featured-system verified,Premium tier
+Equipment_Investment,UAV_LiDAR_Entry,13560,USD,DJI_L2_2024,Professional-entry,Cost effective
+Equipment_Investment,UAV_LiDAR_Survey,135000,USD,Riegl_miniVUX,Survey-grade complete-system,Professional
+Equipment_Investment,Edge_AI_Entry,249,USD,Jetson_Nano_Super,67-TOPS-performance,Development kit
+Equipment_Investment,Edge_AI_Premium,1999,USD,Jetson_AGX_Orin,275-TOPS-performance,Production ready
+Maintenance_Resources,Crack_Sealing_Cost,0.80,USD_per_linear_foot,Industry_Average_2024,Material-and-labor,Standard rates
+Maintenance_Resources,Crew_Daily_Cost,2000,USD,4_Person_Crew,50-70-USD-per-hour,Labor costs
+Maintenance_Resources,Equipment_Rental,100,USD_per_day,Market_Rates,Crack-sealing-machine,Equipment only
+Maintenance_Resources,Sealant_Material,0.30,USD_per_linear_foot,Bulk_Pricing,Hot-pour-rubberized,Material only
+Detection_Thresholds,MMS_Min_Crack,5,mm,Field_Performance,Reliable-detection,Highway speed
+Detection_Thresholds,UAV_Min_Crack,10,mm,Practical_Limits,Weather-dependent,Aerial survey
+Detection_Thresholds,Fiber_Min_Crack,0.2,mm,Luna_ODiSI,Laboratory-verified,Structural monitoring
+Detection_Thresholds,Smartphone_Min_Pothole,50,mm,Research_93_Percent,Accelerometer-based,Crowdsourcing
+ROI_Factors,Payback_Period,3,Years,Economic_Analysis,Typical-digital-system,Investment recovery
+ROI_Factors,Benefit_Cost_Ratio,2.8,Ratio,DOT_Studies,Conservative-estimate,Economic justification
+ROI_Factors,Highways_England_Target,1212,Million_GBP,Efficiency_Plan,5-year-target,National program
+Quality_Metrics,Deep_Learning_Precision,92.9,Percent,Field_Deployment,Real-world-conditions,Automated detection
+Quality_Metrics,Manual_Verification_Need,20,Percent,Industry_Practice,Quality-assurance,Human oversight
+Quality_Metrics,Multi_Sensor_Accuracy,97,Percent,Research_Studies,Camera-plus-IMU,Sensor fusion
+Environmental_Factors,Winter_Cost_Increase,30,Percent,Seasonal_Analysis,Equipment-and-labor,Cold weather
+Environmental_Factors,Night_Work_Premium,50,Percent,Labor_Contracts,Shift-differential,Off-peak work
+Market_Growth,Edge_Computing_CAGR,35,Percent,Market_Research,Through-2030,Technology trend
+Market_Growth,Digital_Twin_CAGR,45,Percent,Industry_Analysis,Through-2028,Market expansion
+Market_Growth,5G_Infrastructure_CAGR,54,Percent,Telecom_Reports,Network-buildout,Infrastructure investment
+Regional_Factors,North_America_Premium,15,Percent,Market_Analysis,Hardware-and-labor,Cost differential
+Regional_Factors,China_Cost_Reduction,30,Percent,Market_Analysis,Local-manufacturing,Cost advantage
+Regional_Factors,Europe_VAT_Impact,22,Percent,Tax_Regulations,Average-VAT-rate,Additional cost
+Budget_Requirements,City_Deployment_5Year,30,Million_USD,Case_Studies,500k-population,Total investment
+Budget_Requirements,Regional_Deployment_5Year,300,Million_USD,Planning_Studies,5M-population,Infrastructure scale
+Budget_Requirements,National_Program_5Year,3000,Million_USD,Government_Plans,Major-country,Full coverage

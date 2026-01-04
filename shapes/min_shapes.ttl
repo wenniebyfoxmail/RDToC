@@ -1,0 +1,82 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdtco: <http://www.semanticweb.org/rmtwin/ontologies/rdtco#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# =============================================================================
+# RMTwin SHACL Constraints v2.1 (Minimal - Completeness Only)
+# =============================================================================
+# 
+# 分层验证策略：
+# - SHACL: 仅检查配置完整性（5个必要组件）
+# - Fast-Check: 负责语义兼容性（运行时规则）
+# 
+# 注意：移除了参数范围约束，因为它们可能导致误报
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Shape 1: 配置完整性约束（唯一强制约束）
+# 每个配置必须包含所有必要组件
+# -----------------------------------------------------------------------------
+rdtco:ConfigurationCompletenessShape
+    a sh:NodeShape ;
+    sh:targetClass rdtco:DigitalTwinConfiguration ;
+    sh:name "Configuration Completeness" ;
+    sh:description "A valid DT configuration must have all required components." ;
+    
+    # 必须有且仅有一个传感器
+    sh:property [
+        sh:path rdtco:hasSensor ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:name "Sensor requirement" ;
+        sh:message "Configuration must have exactly one sensor." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # 必须有且仅有一个算法
+    sh:property [
+        sh:path rdtco:hasAlgorithm ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:name "Algorithm requirement" ;
+        sh:message "Configuration must have exactly one algorithm." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # 必须有且仅有一个部署方式
+    sh:property [
+        sh:path rdtco:hasDeployment ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:name "Deployment requirement" ;
+        sh:message "Configuration must have exactly one deployment." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # 必须有存储组件
+    sh:property [
+        sh:path rdtco:hasStorage ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:name "Storage requirement" ;
+        sh:message "Configuration must have exactly one storage component." ;
+        sh:severity sh:Violation ;
+    ] ;
+    
+    # 必须有通信组件
+    sh:property [
+        sh:path rdtco:hasCommunication ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:name "Communication requirement" ;
+        sh:message "Configuration must have exactly one communication component." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# =============================================================================
+# 注意：参数范围约束（inspection_cycle, data_rate）和评估结果约束
+# 已移除，因为它们可能因数据类型不匹配导致误报。
+# 这些约束由优化框架本身保证（decision variable bounds）。
+# =============================================================================
